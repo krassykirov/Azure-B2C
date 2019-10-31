@@ -1,0 +1,22 @@
+<html>
+    <title>Azure AD v2.0 App</title>
+        <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ sample }} sample</title>
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+      </head>
+    <body >
+        <p>Successfully Logged In! </p>
+        <a href="https://jwt.ms/" target="_blank"><b><pre><strong style="color: blue;">Verify in JWT.ms</strong></pre></b></a>
+        <p><button type="button" class="btn btn-success btn-md" onclick="window.location.href='/refresh'">refresh_token_call</button></p>
+        <p><button type="button" class="btn btn-success btn-md" onclick="window.location.href='/logout'">Logout</button></p>
+        <pre>access_token Claims<br><br>{{ me }}</pre>
+        <pre>RAW Access Token<br>{{ raw }}</pre>
+        <pre>id_token<br>{{ id_token }}</pre>
+        <pre>id_token_decoded<br>{{ id_token_decoded }}</pre>
+        <pre>AuthZ Code<br>{{ code }}</pre>
+        <pre>refresh_token<br>{{ refresh_token }}</pre>
+
+    </body>
+</html>
