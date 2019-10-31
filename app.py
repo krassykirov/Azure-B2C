@@ -1,26 +1,40 @@
-from flask import Flask, redirect, url_for, request, render_template,session
+import flask
+from flask import Flask
+from flask import session,url_for,render_template,redirect
 from flask_oauthlib.client import OAuth
 import urllib.parse
 from jose import jws
 import json, uuid, requests
-import config
+import os
 
+tenant_id = os.environ.get('tenant_id')
+client_id = os.environ.get('client_id')
+client_secret = os.environ.get('client_secret')
+policy_name = 'B2C_1_b2c_signin_signup'
+
+scopes = ['openid','offline_access',client_id]
+
+core_url = 'https://login.microsoftonline.com/tfp/' + tenant_id + '/' + policy_name
+refresh_url = 'https://krassyb2cc.b2clogin.com/krassyb2cc.onmicrosoft.com/oauth2/v2.0/token?p=B2C_1_b2c_signin_signup'
+token_url = core_url + '/oauth2/v2.0/token'
+authorize_url = core_url + '/oauth2/v2.0/authorize'
+keys_url = core_url + '/discovery/keys'
 
 app = Flask(__name__,static_folder='static',template_folder='templates')
 oauth = OAuth(app)
 
-tenant_id = config.tenant_id
-client_id = config.client_id
-client_secret = config.client_secret
-policy_name = config.policy_name
+tenant_id = tenant_id
+client_id = client_id
+client_secret = client_secret
+policy_name = policy_name
 # ===================================
-scopes = config.scopes
+scopes = scopes
 
-core_url = config.core_url
-refresh_url = config.refresh_url
-token_url = config.token_url
-authorize_url = config.authorize_url
-keys_url = config.keys_url
+core_url = core_url
+refresh_url = refresh_url
+token_url = token_url
+authorize_url = authorize_url
+keys_url = keys_url
 
 keys_raw = requests.get(keys_url).text
 keys = json.loads(keys_raw)
@@ -100,8 +114,8 @@ def me():
 @app.route('/refresh', methods= ['POST','GET'])
 def refresh_token():
     # Get a refresh_token
-    params = urllib.parse.urlencode({ 'client_id': config.client_id,
-                                      'client_secret': config.client_secret,
+    params = urllib.parse.urlencode({ 'client_id': client_id,
+                                      'client_secret': client_secret,
                                       'grant_type' :'refresh_token',
                                       'refresh_token': session['refresh_token'],
                                     })
