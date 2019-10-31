@@ -1,4 +1,3 @@
-import flask
 from flask import Flask
 from flask import session,url_for,render_template,redirect
 from flask_oauthlib.client import OAuth
@@ -22,19 +21,6 @@ keys_url = core_url + '/discovery/keys'
 
 app = Flask(__name__,static_folder='static',template_folder='templates')
 oauth = OAuth(app)
-
-tenant_id = tenant_id
-client_id = client_id
-client_secret = client_secret
-policy_name = policy_name
-# ===================================
-scopes = scopes
-
-core_url = core_url
-refresh_url = refresh_url
-token_url = token_url
-authorize_url = authorize_url
-keys_url = keys_url
 
 keys_raw = requests.get(keys_url).text
 keys = json.loads(keys_raw)
